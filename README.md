@@ -1,6 +1,3 @@
-# Intro
-A simple and interactive Expense Tracker that allows users to manage their transactions, view summaries, visualize data with charts, and export to Excel.
-
 # Budget Tracker
 
 A user-friendly Budget Tracker for managing personal finances. It allows users to add transactions, categorize them as income or expenses, view summaries, visualize data with charts, and export the transaction history to an Excel file.
