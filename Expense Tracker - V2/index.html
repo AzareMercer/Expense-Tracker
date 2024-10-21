@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Tracker</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Budget Tracker</h1>
+
+        <div class="toggle-container">
+            <label class="switch">
+                <input type="checkbox" id="dark-mode-toggle">
+                <span class="slider"></span>
+            </label>
+            <span>Dark Mode</span>
+        </div>
+
+        <div class="form-section">
+            <h2>Add Transaction</h2>
+            <form id="transaction-form">
+                <input type="text" id="description" placeholder="Description" required>
+                <input type="number" id="amount" placeholder="Amount" required>
+                <select id="category" required>
+                    <option value="" disabled selected>Category</option>
+                    <option value="Income">Income</option>
+                    <option value="Expense">Expense</option>
+                </select>
+                <input type="date" id="date" required>
+                <select id="currency" required>
+                    <option value="USD">$</option>
+                    <option value="EUR">€</option>
+                    <option value="GBP">£</option>
+                </select>
+                <button type="submit">Add</button>
+            </form>
+        </div>
+
+        <div class="summary-section">
+            <h2>Summary</h2>
+            <p>Total Income: <span id="total-income">0</span></p>
+            <p>Total Expenses: <span id="total-expenses">0</span></p>
+            <p>Net Savings/Deficit: <span id="net-savings">0</span></p>
+        </div>
+
+        <div class="chart-section">
+            <h2>Charts</h2>
+            <canvas id="bar-chart"></canvas>
+            <canvas id="donut-chart"></canvas>
+        </div>
+
+        <div class="table-section">
+            <h2>Transaction History</h2>
+            <table id="transaction-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Currency</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="transaction-body"></tbody>
+            </table>
+        </div>
+
+        <button id="export-button">Export to Excel</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
