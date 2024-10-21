@@ -79,16 +79,67 @@ input:checked + .slider:before {
     transform: translateX(20px);
 }
 
+#upload-file {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    padding: 10px;
+}
+
+#upload-button, #export-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+#upload-button:hover, #export-button:hover {
+    background-color: #45a049;
+}
+
+/* Dark Mode Styles */
 .dark-mode {
-    background-color: #333;
-    color: #f4f4f4;
+    background-color: #1e1e1e; /* A darker background */
+    color: #e0e0e0; /* Light gray text for better contrast */
 }
 
 .dark-mode table {
-    background-color: #444;
-    color: #f4f4f4;
+    background-color: #2b2b2b; /* Darker table background */
+    color: #e0e0e0; /* Light gray text for table content */
 }
 
 .dark-mode th {
-    background-color: #555;
+    background-color: #3a3a3a; /* Slightly lighter for table headers */
+    color: #ffffff; /* White text for better visibility */
+}
+
+.dark-mode input, .dark-mode select, .dark-mode button {
+    background-color: #3a3a3a; /* Dark background for inputs */
+    color: #e0e0e0; /* Light gray text */
+    border: 1px solid #555; /* Border to distinguish inputs */
+}
+
+.dark-mode #upload-button, .dark-mode #export-button {
+    background-color: #4CAF50; /* Keep the green button for visibility */
+    color: #ffffff; /* White text */
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dark-mode #upload-button:hover, .dark-mode #export-button:hover {
+    background-color: #45a049; /* Slightly lighter green on hover */
+}
+
+.dark-mode #bar-chart, .dark-mode #donut-chart {
+    background-color: #2b2b2b; /* Dark background for charts */
+}
+
+.dark-mode .switch input:checked + .slider {
+    background-color: #66ccff; /* Change slider color for better visibility */
+}
+
+.dark-mode .slider:before {
+    background-color: #ffffff; /* Slider circle */
 }
