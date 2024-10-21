@@ -74,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return acc;
         }, {});
 
+        const colors = [
+            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40',
+            '#7B68EE', '#8A2BE2', '#A52A2A', '#DC143C', '#FF4500', '#FFD700',
+            '#ADFF2F', '#32CD32', '#4682B4', '#6A5ACD'
+        ];
+
         if (barChart) barChart.destroy();
         if (donutChart) donutChart.destroy();
 
@@ -85,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasets: [{
                     label: 'Expenses',
                     data: Object.values(expenseData),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+                    backgroundColor: colors,
                     borderColor: '#333',
                     borderWidth: 1,
                 }]
@@ -112,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasets: [{
                     label: 'Expenses',
                     data: Object.values(expenseData),
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
+                    backgroundColor: colors,
                     hoverOffset: 4
                 }]
             },
@@ -129,6 +135,56 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+    }
+
+    document.getElementById('upload-button').addEventListener('click', () => {
+        const fileInput = document.getElementById('upload-file');
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('Please select a file to upload.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const fileType = file.name.split('.').pop().toLowerCase();
+            const content = e.target.result;
+
+            if (fileType === 'csv') {
+                parseCSV(content);
+            } else if (fileType === 'xlsx') {
+                parseXLSX(content);
+            } else {
+                alert('Unsupported file type. Please upload a CSV or XLSX file.');
+            }
+        };
+        reader.readAsBinaryString(file);
+    });
+
+    function parseCSV(csv) {
+        const rows = csv.split('\n').slice(1); // Skip header row if present
+        rows.forEach(row => {
+            const [description, amount, category, date, currency] = row.split(',');
+            if (description && !isNaN(amount) && category && date && currency) {
+                addTransaction(description.trim(), parseFloat(amount), category.trim(), date.trim(), currency.trim());
+            }
+        });
+        alert('CSV transactions uploaded successfully.');
+    }
+
+    function parseXLSX(data) {
+        const workbook = XLSX.read(data, { type: 'binary' });
+        const firstSheetName = workbook.SheetNames[0];
+        const worksheet = workbook.Sheets[firstSheetName];
+        const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+        jsonData.forEach(row => {
+            const { Description, Amount, Category, Date, Currency } = row;
+            if (Description && !isNaN(Amount) && Category && Date && Currency) {
+                addTransaction(Description.trim(), parseFloat(Amount), Category.trim(), Date.trim(), Currency.trim());
+            }
+        });
+        alert('XLSX transactions uploaded successfully.');
     }
 
     form.addEventListener('submit', (e) => {
